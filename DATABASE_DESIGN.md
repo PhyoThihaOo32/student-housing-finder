@@ -2,7 +2,7 @@
 
 CIS 395 · Topic 6, Housing Resources for Students
 
-[Current ER diagram](Housing-ER-Model.svg) · [Lucidchart draft](https://lucid.app/lucidchart/f2bfedb9-eebc-4438-b984-2b0cf1ec7ab1/edit?page=0_0)
+[GitHub ER diagram](ER_DIAGRAM.md) · [UML diagram for class](Housing-ER-Model.svg) · [Lucidchart draft](https://lucid.app/lucidchart/f2bfedb9-eebc-4438-b984-2b0cf1ec7ab1/edit?page=0_0)
 
 ## Scope and assumptions
 

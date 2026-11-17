@@ -51,6 +51,6 @@ Housing chat can answer basic questions about the demo listings and requests. Fo
 ## Project files
 
 - [Database schema and sample data](database.sql)
-- [ER diagram](Housing-ER-Model.svg)
+- [ER diagram](ER_DIAGRAM.md)
 - [Database design](DATABASE_DESIGN.md)
 - [Project requirements](PRD.md)
