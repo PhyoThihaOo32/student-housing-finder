@@ -10,12 +10,12 @@ Student Housing Finder is a housing request and placement app for CUNY campuses.
 
 | ID | Feature | Required behavior |
 | --- | --- | --- |
-| FR-1 | Student housing requests | Students choose an available unit, complete the intake chat, and submit a pending request. They can view, edit, or withdraw their own pending request. |
+| FR-1 | Student housing requests | Students choose an available unit, answer the housing questions, and submit a pending request. They can view, edit, or withdraw their own pending request. |
 | FR-2 | Staff decisions | Staff approve and reserve the requested unit if available, or deny with a reason. A student can reapply after denial. |
 | FR-3 | Housing inventory | Staff can create, view, edit, and delete unused housing units. Units with placement history can be retired when their active placement ends. |
 | FR-4 | Placement history | Approval reserves the unit. Staff record check-in, check-out, or release before move-in. A student's history shows requests, decisions, denial reasons, and placement details. |
 | FR-5 | Housing availability | Students can view available units at their campus. Availability depends on the inventory flag and whether the unit has an active placement. |
-| FR-6 | Housing intake chat | Ask five short questions about enrollment, move-in timing, a place to stay until move-in, expected stay length, and willingness to consider another unit on campus. Store the answers for staff. OpenAI can generate an optional summary from the five answers. |
+| FR-6 | Housing questions | Ask five short questions about enrollment, move-in timing, a place to stay until move-in, expected stay length, and willingness to consider another unit on campus. Store the answers for staff. OpenAI can generate an optional summary from the five answers. |
 | FR-7 | Email and password | Students register with their first and last names, campus, email, and password. Students and staff use the same sign-in form. |
 
 The React interface stays minimal and works at desktop and phone widths. Browsing, intake, request history, staff review, and housing inventory have separate pages. Staff make all housing decisions.

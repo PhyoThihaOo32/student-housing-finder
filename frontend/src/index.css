@@ -195,9 +195,9 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .chat-error { color: #862d21; }
 .back-link { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
 .intake-panel { max-width: 44rem; }
-.chat-form fieldset { margin: 0; padding: .9rem; min-width: 0; border: 1px solid var(--line); border-radius: .65rem; background: #f7fffd52; }
-.chat-form legend { font-weight: 650; font-size: .94rem; padding-inline: .25rem; }
-.chat-form button[aria-pressed='true'] { background: var(--surface-tint); border-color: var(--accent); }
+.intake-form fieldset { margin: 0; padding: .9rem; min-width: 0; border: 1px solid var(--line); border-radius: .65rem; background: #f7fffd52; }
+.intake-form legend { font-weight: 650; font-size: .94rem; padding-inline: .25rem; }
+.intake-form button[aria-pressed='true'] { background: var(--surface-tint); border-color: var(--accent); }
 .form-stack { display: grid; gap: .95rem; margin-top: 1rem; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .95rem; margin: 0; padding: 0; border: 0; min-width: 0; }
 .form-stack label { display: grid; gap: .35rem; font-size: .875rem; font-weight: 650; }

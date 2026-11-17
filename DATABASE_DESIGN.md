@@ -2,11 +2,11 @@
 
 CIS 395 · Topic 6, Housing Resources for Students
 
-[Editable Lucidchart ER model](https://lucid.app/lucidchart/f2bfedb9-eebc-4438-b984-2b0cf1ec7ab1/edit?page=0_0) · [SVG export](Housing-ER-Model.svg)
+[Current ER diagram](Housing-ER-Model.svg) · [Lucidchart draft](https://lucid.app/lucidchart/f2bfedb9-eebc-4438-b984-2b0cf1ec7ab1/edit?page=0_0)
 
 ## Scope and assumptions
 
-`Campus` represents a college or school in the [CUNY directory](https://www.cuny.edu/about/colleges/). The demo uses fictional housing and students at BMCC and The City College of New York.
+`Campus` represents a college or school in the [CUNY directory](https://www.cuny.edu/about/colleges/). The demo includes fictional housing at BMCC, The City College of New York, and Hunter College.
 
 Students request housing through their campus. Staff approve a request by reserving a specific space or deny it with a reason. A student can reapply after a denial or after their previous placement ends. Each student belongs to one campus, and staff place students in housing at that campus. Each housing unit represents a space for one student. For shared rooms, give each bed its own unit label, such as `204-A` and `204-B`. The design reserves an available unit as soon as the request is approved.
 
@@ -102,10 +102,10 @@ The `0..*` on a student's requests describes lifetime history. The one-pending-r
 | New or updated requests contain five answers | The API requires all five answers. PostgreSQL `CHECK` constraints limit answer choices and require enrollment and move-in timing for unit-specific requests. The three newer fields are either all filled for a unit-specific intake or all null for earlier records |
 | Students request units on their campus | The API locks the selected unit and checks campus and availability before saving intake. Requests reserve space when staff approve them |
 | Decision fields match status | PostgreSQL `CHECK` requires a decision time for either final status and a trimmed, nonblank reason for a denial. Pending rows have null decision fields |
-| Placement times are consistent | PostgreSQL `CHECK` orders check-in and end when both exist. The API records check-in and release only on active placements and verifies that event times are at or after approval and at or before the current time |
+| Placement times are consistent | PostgreSQL `CHECK` orders check-in and end when both exist. Staff record check-in or release after approval, and the API uses the current PostgreSQL time for those actions |
 | Approval creates a placement | The API locks and rechecks the pending request, student, and selected unit in a transaction. It verifies the student's campus, the unit's active status, and availability. It updates the request and inserts its placement together |
 | A student can reapply once eligible | Submission checks for an active placement while locking the same student row used by the approval transaction. The pending-request index handles concurrent submissions |
-| Historical records stay connected | Use `ON DELETE RESTRICT` for all foreign keys. The app allows deleting a pending request or a unit with no placement history. Staff retire used units and keep reviewed requests and placements. Once a unit has been assigned, its campus, location, and type are preserved |
+| Historical records stay connected | All foreign keys use `ON DELETE RESTRICT`. Students can withdraw pending requests, and staff can delete units that have no requests or placements. Staff retire referenced units and preserve their campus, location, and type |
 
 If concurrent approvals target the same space, the unique index rejects the second placement and the transaction rolls back its approval. After a placement ends, the unit is available again if it remains active. Lock the unit during retirement and check that its current placement has ended first.
 

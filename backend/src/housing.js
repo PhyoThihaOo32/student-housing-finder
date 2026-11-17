@@ -8,7 +8,7 @@ import { Campus, HousingPlacement, HousingRequest, HousingUnit, Student, sequeli
 import { requireRole, requireSession } from './session.js'
 
 const unitTypes = ['SINGLE_ROOM', 'SHARED_ROOM_BED']
-const studentFields = ['studentId', 'studentNumber', 'firstName', 'lastName', 'campusId']
+const studentFields = ['studentId', 'firstName', 'lastName', 'campusId']
 const studentOnly = requireRole('student')
 const staffOnly = requireRole('staff')
 const limitIntake = rateLimit({
@@ -98,9 +98,16 @@ async function listUnits(student) {
   const units = await HousingUnit.findAll({
     where: student ? { campusId: student.campusId, isActive: true } : undefined,
     include: [
-      { association: 'campus' },
-      { association: 'placements', attributes: ['requestId', 'endedAt'], separate: true },
-      ...(!student ? [{ association: 'incomingRequests', attributes: ['requestId'], separate: true }] : []),
+      {
+        association: 'placements',
+        attributes: ['requestId', 'endedAt'],
+        where: student ? { endedAt: null } : undefined,
+        separate: true,
+      },
+      ...(student ? [] : [
+        { association: 'campus' },
+        { association: 'incomingRequests', attributes: ['requestId'], separate: true },
+      ]),
     ],
     order: [['buildingName', 'ASC'], ['unitLabel', 'ASC']],
   })
@@ -129,6 +136,7 @@ housingRoutes.get('/dashboard', async (request, response) => {
   const [requests, units, campuses] = await Promise.all([
     HousingRequest.findAll({
       where: student ? { studentId: student.studentId } : undefined,
+      attributes: isStudent ? { exclude: ['intakeSummary'] } : undefined,
       include: [
         { association: 'requestedUnit' },
         { association: 'placement', include: { association: 'unit', include: { association: 'campus' } } },

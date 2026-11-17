@@ -43,11 +43,10 @@ export function BrowseHousing({ dashboard }) {
   )
 }
 
-function IntakeChat({ unit, pending, busy, change }) {
+function IntakeForm({ unit, pending, busy, change }) {
   const navigate = useNavigate()
-  const sameUnit = pending?.requestedUnitId === unit.housingUnitId
   const [answers, setAnswers] = useState(() => Object.fromEntries(
-    intakeQuestions.map(({ key }) => [key, sameUnit ? pending[key] ?? null : null]),
+    intakeQuestions.map(({ key }) => [key, pending?.[key] ?? null]),
   ))
   const firstUnanswered = intakeQuestions.findIndex(({ key }) => answers[key] === null)
   const complete = firstUnanswered === -1
@@ -64,9 +63,9 @@ function IntakeChat({ unit, pending, busy, change }) {
 
   return (
     <section className="panel intake-panel">
-      <h2>Housing intake chat</h2>
+      <h2>Housing questions</h2>
       <p className="muted">Your answers will help staff review your request.</p>
-      <form className="form-stack chat-form" onSubmit={submit}>
+      <form className="form-stack intake-form" onSubmit={submit}>
         {visibleQuestions.map(({ key, prompt, options }) => (
           <fieldset key={key}>
             <legend>{prompt}</legend>
@@ -113,7 +112,7 @@ export function HousingApplication({ dashboard, busy, change }) {
             <h1>{unit.buildingName} · {unit.unitLabel}</h1>
             <p className="muted">{dashboard.user.student.campus.name} · {housingTypeLabel(unit.unitType)}</p>
           </div>
-          <IntakeChat key={unit.housingUnitId} unit={unit} pending={pending} busy={busy} change={change} />
+          <IntakeForm key={unit.housingUnitId} unit={unit} pending={pending} busy={busy} change={change} />
         </>
       )}
     </>
@@ -139,7 +138,10 @@ export function MyRequests({ dashboard, busy, change }) {
               <RequestDetails record={record} />
               {record.status === 'PENDING' && (
                 <div className="actions">
-                  <Link className="action-link secondary" to={record.requestedUnitId ? `/housing/${record.requestedUnitId}/request` : '/housing'}>Edit request</Link>
+                  <Link className="action-link secondary" to={
+                    dashboard.units.some((unit) => unit.housingUnitId === record.requestedUnitId)
+                      ? `/housing/${record.requestedUnitId}/request` : '/housing'
+                  }>Edit request</Link>
                   <button type="button" className="text-button" disabled={busy} onClick={() => {
                     if (window.confirm('Withdraw this pending housing request?')) {
                       change(`/requests/${record.requestId}`, { method: 'DELETE' })
