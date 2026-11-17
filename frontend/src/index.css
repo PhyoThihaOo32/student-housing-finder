@@ -26,10 +26,22 @@ button:disabled { cursor: wait; opacity: .58; }
 .site-header { background: var(--white); border-bottom: 1px solid var(--line); }
 .header-inner, main { width: min(100% - 3rem, 68rem); margin-inline: auto; }
 .header-inner { min-height: 4.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.signed-in-header {
+  width: calc(100% - clamp(2rem, 6vw, 5rem));
+  min-height: 4.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: 'brand nav account';
+}
 .wordmark { display: inline-flex; align-items: center; gap: .6rem; font-weight: 750; color: var(--accent-dark); letter-spacing: -.02em; }
 .brand-mark { display: block; flex: none; }
-.header-account, .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
-.header-account > span { color: var(--muted); font-size: .875rem; }
+.signed-in-header .wordmark { grid-area: brand; justify-self: start; }
+.signed-in-header .brand-mark { width: 2.5rem; height: auto; }
+.header-account, .actions { display: flex; align-items: center; gap: .65rem; }
+.actions { flex-wrap: wrap; }
+.header-account { grid-area: account; justify-self: end; min-width: 0; max-width: 100%; }
+.header-account > span { color: var(--muted); font-size: .875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-account > button { flex: none; white-space: nowrap; }
 
 main { flex: 1; padding-block: 2.75rem 4rem; }
 .site-footer { border-top: 1px solid var(--line); background: var(--white); color: var(--muted); padding: 1.05rem 1rem; text-align: center; font-size: .875rem; }
@@ -95,9 +107,8 @@ h1 + p, h2 + p { margin-top: .5rem; }
 }
 .housing-application-page {
   --workspace-color: #143945;
-  --workspace-illustration: url('./assets/housing-application.webp');
-  --illustration-end: clamp(22rem, 33vw, 38rem);
-  --mobile-illustration-position: 73%;
+  --workspace-shade: linear-gradient(145deg, #092c35dd, #113740b0 55%, #092c35d9);
+  --workspace-illustration: url('./assets/housing-inventory.webp');
 }
 .staff-requests-page {
   --workspace-color: #0d3442;
@@ -110,7 +121,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
   --workspace-illustration: url('./assets/housing-inventory.webp');
   --illustration-end: 38rem;
 }
-:is(.housing-application-page, .staff-requests-page, .staff-housing-page) {
+:is(.staff-requests-page, .staff-housing-page) {
   background-image:
     linear-gradient(180deg, #082c3880, transparent 18rem, var(--workspace-color) var(--illustration-end)),
     linear-gradient(90deg, #092b38df, #10343bbd 48%, #10343b75),
@@ -201,7 +212,7 @@ button, .action-link { min-height: 2.5rem; border: 1px solid transparent; border
 .record-details + button, .record-details + .actions { margin-top: 1rem; }
 .inset { border-top: 1px solid var(--line); padding-top: 1rem; }
 
-.header-nav { width: min(100% - 3rem, 68rem); margin-inline: auto; display: flex; flex-wrap: wrap; gap: .4rem; padding-bottom: .65rem; }
+.header-nav { grid-area: nav; display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; }
 .header-nav a { border-radius: .55rem; padding: .45rem .75rem; font-size: .9rem; font-weight: 650; color: var(--muted); text-decoration: none; }
 .header-nav a:hover, .header-nav a[aria-current='page'] { background: var(--surface-tint); color: var(--accent-dark); }
 .segments { display: flex; flex-wrap: wrap; gap: .2rem; background: #eaf0e9; border-radius: .65rem; padding: .2rem; width: fit-content; }
@@ -219,21 +230,29 @@ tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
 table .actions { min-width: 8.75rem; }
 
 @media (max-width: 43rem) {
-  .header-inner, .header-nav, main { width: calc(100% - 2rem); }
+  .header-inner, main { width: calc(100% - 2rem); }
   main { padding-top: 1.65rem; }
   .welcome-page { --welcome-shade: linear-gradient(180deg, #092c35e8, #10343bb8 45%, #10343baa); }
   .welcome { grid-template-columns: minmax(0, 28rem); justify-content: center; }
-  .workspace-background {
+  :is(.browse-housing-page, .request-history-page) {
     --workspace-shade: linear-gradient(180deg, #092c35db, #10343ba8 23rem, var(--workspace-color) 37rem);
     background-position: center, center top;
     background-size: auto, auto 38rem;
   }
-  :is(.housing-application-page, .staff-requests-page, .staff-housing-page) {
+  :is(.staff-requests-page, .staff-housing-page) {
     --illustration-end: 34rem;
     background-position: center, center, var(--mobile-illustration-position, 50%) top;
     background-size: auto, auto, auto 35rem;
   }
-  .header-account { justify-content: flex-end; }
+}
+
+@media (max-width: 46rem) {
+  .signed-in-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: 'brand account' 'nav nav';
+    gap: .5rem .75rem;
+    padding-block: .6rem;
+  }
 }
 
 @media (max-width: 28rem) {

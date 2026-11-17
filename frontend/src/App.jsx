@@ -83,7 +83,7 @@ export default function App() {
   return (
     <div className={`app-shell ${pageTheme}`}>
       <header className="site-header">
-        <div className="header-inner">
+        <div className={dashboard ? 'header-inner signed-in-header' : 'header-inner'}>
           <span className="wordmark">
             <img
               className="brand-mark"
@@ -94,24 +94,22 @@ export default function App() {
             />
             CUNY Housing
           </span>
-          {dashboard && (
+          {dashboard && <>
+            <nav className="header-nav" aria-label="Housing workspace">
+              {student ? <>
+                <NavLink to="/housing">Browse housing</NavLink>
+                <NavLink to="/requests">My requests</NavLink>
+              </> : <>
+                <NavLink to="/staff/requests">Review requests</NavLink>
+                <NavLink to="/staff/housing">Housing units</NavLink>
+              </>}
+            </nav>
             <div className="header-account">
               <span>{student ? `${student.firstName} ${student.lastName}` : 'Campus staff'}</span>
               <button className="secondary" type="button" disabled={busy} onClick={signOut}>Sign out</button>
             </div>
-          )}
+          </>}
         </div>
-        {dashboard && (
-          <nav className="workspace-nav header-nav" aria-label="Housing workspace">
-            {student ? <>
-              <NavLink to="/housing">Browse housing</NavLink>
-              <NavLink to="/requests">My requests</NavLink>
-            </> : <>
-              <NavLink to="/staff/requests">Review requests</NavLink>
-              <NavLink to="/staff/housing">Housing units</NavLink>
-            </>}
-          </nav>
-        )}
       </header>
       <main>
         {notice && <p role={notice.error ? 'alert' : 'status'} className={`notice ${notice.error ? 'notice-error' : ''}`}>{notice.text}</p>}
