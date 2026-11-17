@@ -134,7 +134,12 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .workspace-background .header-nav a:is(:hover, [aria-current='page']) { color: var(--accent-dark); }
 .workspace-background :is(.site-header :focus-visible, .back-link:focus-visible, .section-bar > button:focus-visible) { outline-color: #bceee8; }
 .workspace-background .back-link { color: #e8f5f4; text-underline-offset: .2em; }
-.browse-housing-page .housing-card, :is(.request-history-page, .housing-application-page, .staff-requests-page, .staff-housing-page) .panel { background: #fcfefef2; }
+.workspace-background :is(.panel, .table-wrap) {
+  --muted: #36565c;
+  background-color: #effaf8d9;
+  border-color: #edfffbb3;
+  backdrop-filter: blur(3px);
+}
 
 .housing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); gap: 1rem; }
 .housing-card { display: flex; flex-direction: column; align-items: flex-start; }
@@ -160,6 +165,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
   overflow: auto;
 }
 .housing-chat-panel:not([hidden]) { display: grid; gap: .65rem; box-shadow: 0 .7rem 1.65rem #15262215; }
+.workspace-background .housing-chat-panel { background-color: #effaf8eb; backdrop-filter: blur(7px); }
 .housing-chat-panel .record-heading { align-items: center; }
 .chat-close { min-width: 2.5rem; padding: 0; font-size: 1.3rem; line-height: 1; }
 .housing-chat-log { display: grid; gap: .55rem; max-height: min(16rem, 32dvh); overflow: auto; padding: .15rem .2rem .2rem .1rem; }
@@ -172,7 +178,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .chat-error { color: #862d21; }
 .back-link { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
 .intake-panel { max-width: 44rem; }
-.chat-form fieldset { margin: 0; padding: .9rem; min-width: 0; border: 1px solid var(--line); border-radius: .65rem; background: #f8faf7; }
+.chat-form fieldset { margin: 0; padding: .9rem; min-width: 0; border: 1px solid var(--line); border-radius: .65rem; background: #f7fffd52; }
 .chat-form legend { font-weight: 650; font-size: .94rem; padding-inline: .25rem; }
 .chat-form button[aria-pressed='true'] { background: var(--surface-tint); border-color: var(--accent); }
 .form-stack { display: grid; gap: .95rem; margin-top: 1rem; }
@@ -222,9 +228,9 @@ button, .action-link { min-height: 2.5rem; border: 1px solid transparent; border
 .unit-editor { margin-bottom: .85rem; }
 .table-wrap { overflow: auto; }
 table { border-collapse: collapse; text-align: left; width: 100%; font-size: .875rem; }
-thead { background: var(--surface-tint); color: var(--accent-dark); }
-tbody tr:nth-child(even) { background: #f8faf7; }
-tbody tr:hover { background: #f0f6ef; }
+thead { background: #e1f1efad; color: var(--accent-dark); }
+tbody tr:nth-child(even) { background: #f8faf740; }
+tbody tr:hover { background: #f0f6ef88; }
 th, td { padding: .75rem; border-bottom: 1px solid var(--line); }
 tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
 table .actions { min-width: 8.75rem; }
