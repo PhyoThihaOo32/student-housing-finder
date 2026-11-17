@@ -24,10 +24,15 @@ button:disabled { cursor: wait; opacity: .58; }
 
 .app-shell { display: flex; flex-direction: column; min-height: 100svh; }
 .site-header { background: var(--white); border-bottom: 1px solid var(--line); }
-.header-inner, main { width: min(100% - 3rem, 68rem); margin-inline: auto; }
-.header-inner { min-height: 4.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.signed-in-header {
+.header-inner {
   width: calc(100% - clamp(2rem, 6vw, 5rem));
+  margin-inline: auto;
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.signed-in-header {
   min-height: 4.5rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -43,7 +48,7 @@ button:disabled { cursor: wait; opacity: .58; }
 .header-account > span { color: var(--muted); font-size: .875rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .header-account > button { flex: none; white-space: nowrap; }
 
-main { flex: 1; padding-block: 2.75rem 4rem; }
+main { flex: 1; width: min(100% - 3rem, 68rem); margin-inline: auto; padding-block: 2.75rem 4rem; }
 .site-footer { border-top: 1px solid var(--line); background: var(--white); color: var(--muted); padding: 1.05rem 1rem; text-align: center; font-size: .875rem; }
 .site-footer a { font-weight: 650; text-underline-offset: .2em; }
 .site-footer a:hover { color: var(--accent); }
@@ -60,9 +65,9 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .panel { padding: 1.35rem; }
 
 .welcome-page {
-  --welcome-shade: linear-gradient(90deg, #092c35d9, #10343bb8 46%, #10343baa 74%);
+  --welcome-shade: linear-gradient(90deg, #123742c9, #1a424c9e 46%, #143b46b0 74%);
   background:
-    linear-gradient(180deg, transparent 78%, #092c3580),
+    linear-gradient(180deg, #092c3533, transparent 9rem, transparent 82%, #092c3568),
     var(--welcome-shade),
     #527b80 url('./assets/campus-dorm.webp') center / cover no-repeat;
 }
@@ -96,8 +101,8 @@ h1 + p, h2 + p { margin-top: .5rem; }
   background-repeat: no-repeat;
 }
 .browse-housing-page {
-  --workspace-color: #174b54;
-  --workspace-shade: linear-gradient(140deg, #092c35d9, #10343ba8 52%, #10343bc4);
+  --workspace-color: #205660;
+  --workspace-shade: linear-gradient(140deg, #123742cd, #19434ca0 52%, #133e49b8);
   --workspace-illustration: url('./assets/housing-neighborhood.webp');
 }
 .request-history-page {
@@ -109,7 +114,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
   --workspace-illustration: url('./assets/housing-inventory.webp');
 }
 :is(.request-history-page, .housing-application-page) {
-  --workspace-shade: linear-gradient(145deg, #092c35dd, #113740b0 55%, #092c35d9);
+  --workspace-shade: linear-gradient(145deg, #103541d2, #17434ea3 55%, #103541c9);
 }
 .staff-requests-page {
   --workspace-color: #0d3442;
@@ -124,8 +129,8 @@ h1 + p, h2 + p { margin-top: .5rem; }
 }
 :is(.staff-requests-page, .staff-housing-page) {
   background-image:
-    linear-gradient(180deg, #082c3880, transparent 18rem, var(--workspace-color) var(--illustration-end)),
-    linear-gradient(90deg, #092b38df, #10343bbd 48%, #10343b75),
+    linear-gradient(180deg, #0c38426e, transparent 18rem, var(--workspace-color) var(--illustration-end)),
+    linear-gradient(90deg, #123843d2, #17424db0 48%, #143b466b),
     var(--workspace-illustration);
   background-position: center, center, center top;
   background-size: auto, auto, max(100%, 68rem) auto;
@@ -137,7 +142,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .workspace-background .back-link { color: #e8f5f4; text-underline-offset: .2em; }
 .workspace-background :is(.panel, .table-wrap) {
   --muted: #36565c;
-  background-color: #effaf8d9;
+  background-color: #f3fcfad9;
   border-color: #edfffbb3;
   backdrop-filter: blur(3px);
 }
@@ -239,10 +244,10 @@ table .actions { min-width: 8.75rem; }
 @media (max-width: 43rem) {
   .header-inner, main { width: calc(100% - 2rem); }
   main { padding-top: 1.65rem; }
-  .welcome-page { --welcome-shade: linear-gradient(180deg, #092c35e8, #10343bb8 45%, #10343baa); }
+  .welcome-page { --welcome-shade: linear-gradient(180deg, #123742d9, #183e49b3 45%, #143b46a8); }
   .welcome { grid-template-columns: minmax(0, 28rem); justify-content: center; }
   .browse-housing-page {
-    --workspace-shade: linear-gradient(180deg, #092c35db, #10343ba8 23rem, var(--workspace-color) 37rem);
+    --workspace-shade: linear-gradient(180deg, #123742ce, #19434ca0 23rem, var(--workspace-color) 37rem);
     background-position: center, center top;
     background-size: auto, auto 38rem;
   }
