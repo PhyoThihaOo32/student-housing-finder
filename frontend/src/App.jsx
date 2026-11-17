@@ -9,7 +9,10 @@ import { BrowseHousing, HousingApplication, MyRequests } from './StudentPage.jsx
 
 export default function App() {
   const browseHousingRoute = useMatch('/housing')
+  const housingApplicationRoute = useMatch('/housing/:unitId/request')
   const requestHistoryRoute = useMatch('/requests')
+  const staffRequestsRoute = useMatch('/staff/requests')
+  const staffHousingRoute = useMatch('/staff/housing')
   const [dashboard, setDashboard] = useState(undefined)
   const [notice, setNotice] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -68,9 +71,13 @@ export default function App() {
   }
 
   const student = dashboard?.user.student
-  const studentTheme = browseHousingRoute ? 'student-background browse-housing-page'
-    : requestHistoryRoute ? 'student-background request-history-page' : ''
-  const pageTheme = dashboard === null ? 'welcome-page' : student ? studentTheme : ''
+  const studentTheme = browseHousingRoute ? 'browse-housing-page'
+    : housingApplicationRoute ? 'housing-application-page'
+      : requestHistoryRoute ? 'request-history-page' : ''
+  const staffTheme = staffRequestsRoute ? 'staff-requests-page' : staffHousingRoute ? 'staff-housing-page' : ''
+  const workspaceTheme = student ? studentTheme : staffTheme
+  const pageTheme = dashboard === null ? 'welcome-page'
+    : dashboard && workspaceTheme ? `workspace-background ${workspaceTheme}` : ''
   const pageProps = { dashboard, busy, change }
 
   return (

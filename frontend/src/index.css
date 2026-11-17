@@ -54,10 +54,10 @@ h1 + p, h2 + p { margin-top: .5rem; }
     var(--welcome-shade),
     #527b80 url('./assets/campus-dorm.webp') center / cover no-repeat;
 }
-:is(.welcome-page, .student-background) :is(.site-header, .site-footer) { background: transparent; border-color: #d5f1ee40; }
-:is(.welcome-page, .student-background) :is(.wordmark, .site-footer, .site-footer a) { color: #f6fdfd; }
-:is(.welcome-page, .student-background) .site-footer a:hover { color: #bceee8; }
-:is(.welcome-page, .student-background) .site-footer a:focus-visible { outline-color: #bceee8; }
+:is(.welcome-page, .workspace-background) :is(.site-header, .site-footer) { background: transparent; border-color: #d5f1ee40; }
+:is(.welcome-page, .workspace-background) :is(.wordmark, .site-footer, .site-footer a) { color: #f6fdfd; }
+:is(.welcome-page, .workspace-background) .site-footer a:hover { color: #bceee8; }
+:is(.welcome-page, .workspace-background) .site-footer a:focus-visible { outline-color: #bceee8; }
 .welcome-page main { display: flex; flex-direction: column; justify-content: center; padding-block: clamp(1.25rem, 4vh, 3rem); }
 .welcome { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 23rem); align-items: center; gap: clamp(1.5rem, 5vw, 5rem); }
 .welcome-intro { color: #f6fdfd; }
@@ -76,28 +76,54 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .auth-switch { margin-top: 1.25rem; color: var(--muted); font-size: .9rem; }
 .auth-switch a { color: #f6fdfd; font-weight: 650; text-underline-offset: .2em; }
 
-.student-background {
-  background-color: var(--student-background-color);
-  background-image: var(--student-shade), var(--student-illustration);
+.workspace-background {
+  background-color: var(--workspace-color);
+  background-image: var(--workspace-shade), var(--workspace-illustration);
   background-position: center, center 39%;
   background-size: auto, cover;
   background-repeat: no-repeat;
 }
 .browse-housing-page {
-  --student-background-color: #174b54;
-  --student-shade: linear-gradient(140deg, #092c35d9, #10343ba8 52%, #10343bc4);
-  --student-illustration: url('./assets/housing-neighborhood.webp');
+  --workspace-color: #174b54;
+  --workspace-shade: linear-gradient(140deg, #092c35d9, #10343ba8 52%, #10343bc4);
+  --workspace-illustration: url('./assets/housing-neighborhood.webp');
 }
 .request-history-page {
-  --student-background-color: #0b303c;
-  --student-shade: linear-gradient(140deg, #062533bd, #0b303c64 50%, #0724318c);
-  --student-illustration: url('./assets/request-history.webp');
+  --workspace-color: #0b303c;
+  --workspace-shade: linear-gradient(140deg, #062533bd, #0b303c64 50%, #0724318c);
+  --workspace-illustration: url('./assets/request-history.webp');
 }
-.student-background .page-heading { color: #f6fdfd; border-color: #d5f1ee40; }
-.student-background :is(.page-heading .muted, .header-account > span, .header-nav a) { color: #e8f5f4; }
-.student-background .header-nav a:is(:hover, [aria-current='page']) { color: var(--accent-dark); }
-.student-background .site-header :focus-visible { outline-color: #bceee8; }
-.browse-housing-page .housing-card, .request-history-page .panel { background: #fcfefef2; }
+.housing-application-page {
+  --workspace-color: #143945;
+  --workspace-illustration: url('./assets/housing-application.webp');
+  --illustration-end: clamp(22rem, 33vw, 38rem);
+  --mobile-illustration-position: 73%;
+}
+.staff-requests-page {
+  --workspace-color: #0d3442;
+  --workspace-illustration: url('./assets/staff-requests.webp');
+  --illustration-end: 43rem;
+  --mobile-illustration-position: 65%;
+}
+.staff-housing-page {
+  --workspace-color: #143743;
+  --workspace-illustration: url('./assets/housing-inventory.webp');
+  --illustration-end: 38rem;
+}
+:is(.housing-application-page, .staff-requests-page, .staff-housing-page) {
+  background-image:
+    linear-gradient(180deg, #082c3880, transparent 18rem, var(--workspace-color) var(--illustration-end)),
+    linear-gradient(90deg, #092b38df, #10343bbd 48%, #10343b75),
+    var(--workspace-illustration);
+  background-position: center, center, center top;
+  background-size: auto, auto, max(100%, 68rem) auto;
+}
+.workspace-background .page-heading { color: #f6fdfd; border-color: #d5f1ee40; }
+.workspace-background :is(.page-heading .muted, .header-account > span, .header-nav a, .section-bar h2) { color: #e8f5f4; }
+.workspace-background .header-nav a:is(:hover, [aria-current='page']) { color: var(--accent-dark); }
+.workspace-background :is(.site-header :focus-visible, .back-link:focus-visible, .section-bar > button:focus-visible) { outline-color: #bceee8; }
+.workspace-background .back-link { color: #e8f5f4; text-underline-offset: .2em; }
+.browse-housing-page .housing-card, :is(.request-history-page, .housing-application-page, .staff-requests-page, .staff-housing-page) .panel { background: #fcfefef2; }
 
 .housing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); gap: 1rem; }
 .housing-card { display: flex; flex-direction: column; align-items: flex-start; }
@@ -197,10 +223,15 @@ table .actions { min-width: 8.75rem; }
   main { padding-top: 1.65rem; }
   .welcome-page { --welcome-shade: linear-gradient(180deg, #092c35e8, #10343bb8 45%, #10343baa); }
   .welcome { grid-template-columns: minmax(0, 28rem); justify-content: center; }
-  .student-background {
-    --student-shade: linear-gradient(180deg, #092c35db, #10343ba8 23rem, var(--student-background-color) 37rem);
+  .workspace-background {
+    --workspace-shade: linear-gradient(180deg, #092c35db, #10343ba8 23rem, var(--workspace-color) 37rem);
     background-position: center, center top;
     background-size: auto, auto 38rem;
+  }
+  :is(.housing-application-page, .staff-requests-page, .staff-housing-page) {
+    --illustration-end: 34rem;
+    background-position: center, center, var(--mobile-illustration-position, 50%) top;
+    background-size: auto, auto, auto 35rem;
   }
   .header-account { justify-content: flex-end; }
 }
