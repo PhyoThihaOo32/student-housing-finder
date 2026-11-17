@@ -54,22 +54,42 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .panel, .table-wrap { border: 1px solid var(--line); border-radius: 1rem; background: var(--white); box-shadow: var(--shadow); }
 .panel { padding: 1.35rem; }
 
-.welcome-page main { display: flex; flex-direction: column; justify-content: center; }
-.welcome { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem); align-items: center; gap: clamp(1.5rem, 6vw, 5.5rem); }
-.welcome-intro h1 { max-width: 13ch; font-size: clamp(2.4rem, 5.6vw, 4.7rem); text-wrap: balance; }
-.welcome-intro h1 span { color: var(--accent); }
-.welcome-intro p { max-width: 39ch; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.15rem); margin-top: 1.15rem; }
+.welcome-page {
+  --accent: #0a6568;
+  --accent-dark: #084c54;
+  --muted: #436368;
+  --surface-tint: #e1f1ef;
+  --line: #cedfdf;
+  --welcome-shade: linear-gradient(90deg, #092c35d9, #10343bb8 46%, #10343baa 74%);
+  color: #153238;
+  background:
+    linear-gradient(180deg, transparent 78%, #092c3580),
+    var(--welcome-shade),
+    #527b80 url('./assets/campus-dorm.webp') center / cover no-repeat;
+}
+.welcome-page .site-header, .welcome-page .site-footer { background: transparent; border-color: #d5f1ee40; }
+.welcome-page .wordmark, .welcome-page .site-footer, .welcome-page .site-footer a { color: #f6fdfd; }
+.welcome-page .brand-mark { background: #e1f1ef26; color: inherit; }
+.welcome-page .site-footer a:hover { color: #bceee8; }
+.welcome-page :focus-visible { outline-color: #197b80; }
+.welcome-page .site-footer a:focus-visible { outline-color: #bceee8; }
+.welcome-page main { display: flex; flex-direction: column; justify-content: center; padding-block: clamp(1.25rem, 4vh, 3rem); }
+.welcome { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 23rem); align-items: center; gap: clamp(1.5rem, 5vw, 5rem); }
+.welcome-intro { color: #f6fdfd; }
+.welcome-intro h1 { max-width: 14ch; font-size: clamp(2.25rem, 5.3vw, 4.4rem); text-wrap: balance; }
+.welcome-intro h1 span { color: #bceee8; }
+.welcome-intro p { max-width: 43ch; color: #e8f5f4; margin-top: 1rem; text-wrap: pretty; }
 .welcome-account {
-  padding: clamp(1.35rem, 3vw, 2.4rem);
-  border-top: .2rem solid #7ba892;
-  border-radius: 1.2rem;
-  box-shadow: 0 .9rem 2.5rem #1526220e;
+  --muted: #e8f5f4;
+  color: #f6fdfd;
 }
 .welcome-account h2 { font-size: clamp(1.5rem, 2.6vw, 1.85rem); }
 .welcome-account .form-stack { margin-top: 1.35rem; }
-.welcome-account .primary { min-height: 2.75rem; }
+.welcome-account input:not([type='checkbox']), .welcome-account select { color: #153238; background: #f5fbfbe6; }
+.welcome-account :focus-visible { outline-color: #bceee8; }
+.welcome-account .primary { min-height: 2.75rem; border-color: #8dbbbb; }
 .auth-switch { margin-top: 1.25rem; color: var(--muted); font-size: .9rem; }
-.auth-switch a { font-weight: 650; text-underline-offset: .2em; }
+.auth-switch a { color: #f6fdfd; font-weight: 650; text-underline-offset: .2em; }
 
 .housing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); gap: 1rem; }
 .housing-card { display: flex; flex-direction: column; align-items: flex-start; }
@@ -168,8 +188,8 @@ table .actions { min-width: 8.75rem; }
 @media (max-width: 43rem) {
   .header-inner, .header-nav, main { width: calc(100% - 2rem); }
   main { padding-top: 1.65rem; }
+  .welcome-page { --welcome-shade: linear-gradient(180deg, #092c35e8, #10343bb8 45%, #10343baa); }
   .welcome { grid-template-columns: minmax(0, 28rem); justify-content: center; }
-  .welcome-intro p { margin-top: .75rem; }
   .header-account { justify-content: flex-end; }
 }
 

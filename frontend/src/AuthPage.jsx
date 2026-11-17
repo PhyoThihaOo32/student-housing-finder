@@ -26,8 +26,8 @@ export default function AuthPage({ register = false, busy, submit }) {
         <h1 id="welcome-title">Find housing at your <span>CUNY campus</span></h1>
         <p>Explore demo rooms and beds, submit a housing request, and track its progress.</p>
       </div>
-      <div className="panel welcome-account">
-        <h2>{register ? 'Create a student account' : 'Sign in'}</h2>
+      <section className="welcome-account" aria-labelledby="account-title">
+        <h2 id="account-title">{register ? 'Create a student account' : 'Sign in'}</h2>
         {loadError && <p className="muted" role="alert">{loadError}</p>}
         <form className="form-stack" onSubmit={onSubmit}>
           {register && (
@@ -56,7 +56,7 @@ export default function AuthPage({ register = false, busy, submit }) {
           {register ? <>Already have an account? <Link to="/login">Sign in</Link></>
             : <>New student? <Link to="/register">Create an account</Link></>}
         </p>
-      </div>
+      </section>
     </section>
   )
 }
