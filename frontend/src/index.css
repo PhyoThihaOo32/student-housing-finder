@@ -102,13 +102,14 @@ h1 + p, h2 + p { margin-top: .5rem; }
 }
 .request-history-page {
   --workspace-color: #0b303c;
-  --workspace-shade: linear-gradient(140deg, #062533bd, #0b303c64 50%, #0724318c);
   --workspace-illustration: url('./assets/request-history.webp');
 }
 .housing-application-page {
   --workspace-color: #143945;
-  --workspace-shade: linear-gradient(145deg, #092c35dd, #113740b0 55%, #092c35d9);
   --workspace-illustration: url('./assets/housing-inventory.webp');
+}
+:is(.request-history-page, .housing-application-page) {
+  --workspace-shade: linear-gradient(145deg, #092c35dd, #113740b0 55%, #092c35d9);
 }
 .staff-requests-page {
   --workspace-color: #0d3442;
@@ -240,7 +241,7 @@ table .actions { min-width: 8.75rem; }
   main { padding-top: 1.65rem; }
   .welcome-page { --welcome-shade: linear-gradient(180deg, #092c35e8, #10343bb8 45%, #10343baa); }
   .welcome { grid-template-columns: minmax(0, 28rem); justify-content: center; }
-  :is(.browse-housing-page, .request-history-page) {
+  .browse-housing-page {
     --workspace-shade: linear-gradient(180deg, #092c35db, #10343ba8 23rem, var(--workspace-color) 37rem);
     background-position: center, center top;
     background-size: auto, auto 38rem;
