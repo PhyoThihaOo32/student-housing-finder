@@ -15,12 +15,9 @@ export function BrowseHousing({ dashboard }) {
 
   return (
     <>
-      <div className="housing-hero">
-        <div className="housing-hero-copy">
-          <h1>Browse housing</h1>
-          <p>{user.student.campus.name} · Demo inventory</p>
-        </div>
-        <div className="housing-hero-art" aria-hidden="true" />
+      <div className="page-heading">
+        <h1>Browse housing</h1>
+        <p className="muted">{user.student.campus.name} · Demo inventory</p>
       </div>
       {placement && <p className="notice">You have an active placement. <Link to="/requests">View your placement</Link></p>}
       {pending && <p className="notice">You have a pending request. Choose a unit to update it or <Link to="/requests">view its status</Link>.</p>}

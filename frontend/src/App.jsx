@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Navigate, Route, Routes } from 'react-router'
+import { NavLink, Navigate, Route, Routes, useMatch } from 'react-router'
 import { api } from './api.js'
+import cunyLogoBlue from './assets/cuny-logo-blue.png'
+import cunyLogoWhite from './assets/cuny-logo-white.png'
 import AuthPage from './AuthPage.jsx'
 import StaffPage from './StaffPage.jsx'
 import { BrowseHousing, HousingApplication, MyRequests } from './StudentPage.jsx'
 
 export default function App() {
+  const browseHousingRoute = useMatch('/housing')
   const [dashboard, setDashboard] = useState(undefined)
   const [notice, setNotice] = useState(null)
   const [busy, setBusy] = useState(false)
@@ -64,19 +67,22 @@ export default function App() {
   }
 
   const student = dashboard?.user.student
+  const pageTheme = dashboard === null ? 'welcome-page' : student && browseHousingRoute ? 'browse-housing-page' : ''
   const pageProps = { dashboard, busy, change }
 
   return (
-    <div className={dashboard === null ? 'app-shell welcome-page' : 'app-shell'}>
+    <div className={`app-shell ${pageTheme}`}>
       <header className="site-header">
         <div className="header-inner">
           <span className="wordmark">
-            <span className="brand-mark" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m3 10 9-7 9 7M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M10 20v-6h4v6" />
-              </svg>
-            </span>
-            Student Housing Finder
+            <img
+              className="brand-mark"
+              src={pageTheme ? cunyLogoWhite : cunyLogoBlue}
+              alt=""
+              width={48}
+              height={47}
+            />
+            CUNY Housing
           </span>
           {dashboard && (
             <div className="header-account">
