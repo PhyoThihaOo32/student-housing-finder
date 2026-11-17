@@ -60,4 +60,6 @@ npm --prefix frontend run lint
 npm --prefix frontend run build
 ```
 
-The hosting plan uses **Neon** for PostgreSQL, **Render** for the Express service rooted at `backend/`, and **Vercel** for the Vite build rooted at `frontend/`. Configure the API environment on Render and route `/api/*` through the Vercel origin to Render so session cookies and API requests use the same browser origin.
+Students can create an account in the [hosted demo](https://student-housing-finder.vercel.app/). The demo passwords listed above are for local development. Render stores the hosted staff credentials and the Neon connection string in the API service environment.
+
+The hosted demo uses **Neon** for PostgreSQL, **Render** for Express, and **Vercel** for Vite. The Render Blueprint builds `backend/` from the private repository and checks `/api/health`. Vercel builds `frontend/`, where `vercel.json` routes `/api/*` to Render through the same browser origin.
