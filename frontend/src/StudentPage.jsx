@@ -142,7 +142,7 @@ export function MyRequests({ dashboard, busy, change }) {
                   <Link className="action-link secondary" to={record.requestedUnitId ? `/housing/${record.requestedUnitId}/request` : '/housing'}>Edit request</Link>
                   <button type="button" className="text-button" disabled={busy} onClick={() => {
                     if (window.confirm('Withdraw this pending housing request?')) {
-                      change(`/requests/${record.requestId}`, { method: 'DELETE' }, 'Pending request withdrawn.')
+                      change(`/requests/${record.requestId}`, { method: 'DELETE' })
                     }
                   }}>Withdraw</button>
                 </div>

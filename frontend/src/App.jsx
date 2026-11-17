@@ -61,10 +61,11 @@ export default function App() {
       await api(path, options)
       try {
         setDashboard(await api('/dashboard'))
-        setNotice({ text: message })
+        if (message) setNotice({ text: message })
       } catch (error) {
         if (error.status === 401) setDashboard(null)
-        setNotice({ error: true, text: `${message} Refresh the page to see the latest records.` })
+        const savedMessage = message ?? 'Your change was saved.'
+        setNotice({ error: true, text: `${savedMessage} Refresh the page to see the latest records.` })
       }
       onSaved?.()
     })
