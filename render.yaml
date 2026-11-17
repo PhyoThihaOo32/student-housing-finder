@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: cuny-student-housing-api
+    runtime: node
+    plan: free
+    region: virginia
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.3
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: STAFF_EMAIL
+        value: staff@example.org
+      - key: STAFF_PASSWORD
+        generateValue: true

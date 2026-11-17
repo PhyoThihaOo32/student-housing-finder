@@ -4,59 +4,39 @@
 
 ## Project overview
 
-Student Housing Finder helps BMCC students and their families find NYC affordable rental lotteries that are accepting applications. They can search by name or address, narrow results by borough and application deadline, and open the official Housing Connect page to check requirements and apply. The public search works without an account.
-
-The first release is a searchable collection of verified rental opportunities. Results show the application deadline, building locations, and when the listing was last checked. A plain-language search option helps students express what they want in one step, such as “Brooklyn lotteries closing in the next two weeks.”
+Student Housing Finder is a housing request and placement app for CUNY campuses. Students can view available rooms or beds at their campus, submit one request at a time, and see the decisions and placements associated with their requests. Campus staff manage housing units, review requests, assign available spaces, and record check-in and check-out. The campus names come from CUNY's directory. Demo students, housing units, requests, and placements are fictional. [CUNY Colleges & Schools](https://www.cuny.edu/about/colleges/)
 
 ## Product requirements
 
 | ID | Feature | Required behavior |
 | --- | --- | --- |
-| FR-1 | Search open rental lotteries | Browse lotteries accepting applications. Search by lottery name or building address. Filter by borough and deadline. Sort by earliest deadline by default, and show each lottery once even if multiple addresses match. |
-| FR-2 | View a listing | Show the lottery name, associated building addresses, boroughs, application deadline, last-checked date, and official Housing Connect link. Include a link to Housing Connect's full open-lottery search on the results page. |
-| FR-3 | Manage lotteries | A signed-in maintainer can create, view, edit, and delete lottery records through the GUI. Validate required fields, application dates, and official links. Confirm deletion and explain when a lottery still has associated locations. |
-| FR-4 | Manage locations | A signed-in maintainer can create, view, edit, and delete location records through the GUI. Each location must be assigned to a lottery. Address and borough changes should be reflected in search results. |
-| FR-5 | Search with AI | Convert short, plain-language queries into the same supported search filters. Show the filters applied so users can correct them. The API validates the filters and PostgreSQL returns the matching listings. Manual search stays available if AI is unavailable or the query is unsupported. |
+| FR-1 | Student housing requests | Students choose an available unit, complete the intake chat, and submit a pending request. They can view, edit, or withdraw their own pending request. |
+| FR-2 | Staff decisions | Staff approve and reserve the requested unit if available, or deny with a reason. A student can reapply after denial. |
+| FR-3 | Housing inventory | Staff can create, view, edit, and delete unused housing units. Units with placement history can be retired when their active placement ends. |
+| FR-4 | Placement history | Approval reserves the unit. Staff record check-in, check-out, or release before move-in. A student's history shows requests, decisions, denial reasons, and placement details. |
+| FR-5 | Housing availability | Students can view available units at their campus. Availability depends on the inventory flag and whether the unit has an active placement. |
+| FR-6 | Housing intake chat | Ask five short questions about enrollment, move-in timing, a place to stay until move-in, expected stay length, and willingness to consider another unit on campus. Store the answers for staff. OpenAI can generate an optional summary from the five answers. |
+| FR-7 | Email and password | Students register with their first and last names, campus, email, and password. Students and staff use the same sign-in form. |
 
-The app should work at phone and desktop widths. Use labeled controls, keyboard-accessible forms, and loading, error, and empty states. An empty result should let the user clear filters or go directly to Housing Connect.
+The React interface stays minimal and works at desktop and phone widths. Browsing, intake, request history, staff review, and housing inventory have separate pages. Staff make all housing decisions.
 
-## Data sources and listing freshness
+## Database and stack
 
-- **NYC Open Data** supplies lottery names, status, and dates from the lottery-level dataset, and addresses and boroughs from the building-level dataset. Join records on the source Lottery ID. Both datasets publish monthly, and their records include historical lotteries. [Advertised Lotteries by Lottery](https://data.cityofnewyork.us/Housing-Development/Advertised-Lotteries-on-Housing-Connect-by-Lottery/vy5i-a666) · [Advertised Lotteries by Building](https://data.cityofnewyork.us/Housing-Development/Advertised-Lotteries-on-Housing-Connect-By-Buildin/nibs-na6y)
-- **NYC Housing Connect** is the source for confirming whether an application is open and where to apply. Start with a small selection of rentals checked against the live portal. Record the last check and recheck the listings before launch and recording. The first release uses manual updates through the management screen. [Housing Connect open lotteries](https://housingconnect.nyc.gov/PublicWeb/search-lotteries)
-- **Public results** show listings whose stored status indicates they are accepting applications and whose application window includes the current New York date or time. Use the official closing time when available and treat a date-only deadline as inclusive in New York. Send students to Housing Connect for the latest status, current requirements, and application.
-- **Future search filters** can include rent, bedroom size, and household size once the corresponding unit-level information is verified and stored. A lottery-wide price range alone is insufficient for matching a specific household to an advertised unit.
+The five entities are `Campus`, `Student`, `HousingUnit`, `HousingRequest`, and `HousingPlacement`. The normalized schema uses primary and foreign keys, PostgreSQL constraints, and a transaction for approval and assignment. The standalone `database.sql` contains the table definitions and sample inserts. **HousingRequest** and **HousingUnit** are the two full CRUD tables. [Database design](DATABASE_DESIGN.md) · [Lecture 06 UML ER diagram](Housing-ER-Model.svg)
 
-## Database and ER model
-
-| Entity | Proposed fields | Application access |
-| --- | --- | --- |
-| `RentalLottery` | `lotteryId` (PK), `sourceLotteryId` (unique when provided), `name`, `applicationOpensOn`, `applicationClosesOn`, `applicationStatus`, `applicationUrl`, `lastVerifiedAt` | Full CRUD |
-| `LotteryLocation` | `locationId` (PK), `lotteryId` (required FK), `streetAddress`, `borough`, `postalCode` | Full CRUD |
-
-**RentalLottery Includes LotteryLocation.** A lottery can have several advertised building addresses. Each location belongs to exactly one lottery. A draft lottery can have zero locations, and public search requires at least one. Place `1` next to `RentalLottery` and `0..*` next to `LotteryLocation`. Store deadlines and status once on the lottery. PostgreSQL enforces the foreign key and prevents deleting a lottery while it has associated location records.
-
-Use Lecture 06 UML notation with entity rectangles, primary keys first and tagged `{PK}`, verb labels, arrows showing reading direction, and multiplicities at both ends. Verify the logical schema against third normal form and export the ER diagram as SVG.
-
-## Technical approach and deployment
-
-- **Vercel** hosts the React search, listing detail, and maintenance interface. The frontend gets the API URL from configuration.
-- **Render** hosts the Express.js API, including search, protected CRUD, and the OpenAI integration. Express checks maintainer authorization on every write endpoint. The OpenAI key and database credentials are configured on Render.
-- **Neon** hosts PostgreSQL. Express connects through Sequelize. The same app can run locally against a PostgreSQL database configured for grading.
-- **OpenAI** maps natural-language inputs to a validated set of filters. The API queries PostgreSQL and uses stored listing details and official links in the results. The public AI endpoint is rate-limited, and the app does not save the query text.
-- **`database.sql`** creates the relational schema and includes sample data for local setup and grading. Populate the hosted database with checked listings and keep synthetic grading examples in the local demo database.
+Use JavaScript, React with Vite, Express.js, Sequelize, and PostgreSQL. The planned hosting uses Vercel for React, Render for Express, and Neon for PostgreSQL. Local setup remains available for grading.
 
 ## Acceptance criteria
 
-1. On the hosted Vercel site, a visitor can search by name or address, narrow results by borough and deadline, and follow an official application link. Results and details come from the Render API backed by Neon.
-2. An expired listing drops out of public search. A lottery with two matching locations appears once and its detail view shows both addresses. Each public result displays its last-checked date.
-3. In the GUI, the maintainer creates a lottery and assigns a location, views and edits both, and reloads to confirm persistence. The database blocks deleting the lottery while the location exists. The maintainer then deletes the location and the lottery. An unauthenticated write request is rejected.
-4. A phrase such as “Brooklyn lotteries closing in the next two weeks” applies the Brooklyn and deadline filters, with the same results as setting them manually. Manual search continues to work if AI is unavailable.
-5. Starting with an empty local PostgreSQL database, running `database.sql` creates all tables and inserts sample records. The documented steps start the app locally and support the CRUD demonstration.
+1. Import `database.sql` into an empty PostgreSQL database. Start both services and sign in with the seeded demo credentials.
+2. Register a student, select an available unit on the student's campus, and answer all five intake questions. Create, read, edit, and withdraw a pending request. Verify that a second pending request is rejected.
+3. Deny a request with a required reason, then submit a new request. Approve it and reserve the requested unit. Verify that the same unit is unavailable for a second placement.
+4. Check the student in and out and verify that housing history preserves the decision, assigned unit, and stay dates.
+5. Use the staff GUI to add, view, edit, and delete an unused unit. Verify that a unit with history can be retired and remains linked to its past placements.
 
 ## Course submission
 
 - **ZIP file** with all application files, local setup instructions, and `database.sql` containing `CREATE TABLE` and sample `INSERT` statements.
-- **Submission textbox** with partner name if applicable, project topic, project title, brief description, programming language, database system, and recording link. Include the deployed app link. The GitHub link is optional.
-- **Slides** explaining the problem, solution, how the solution addresses the problem, why this approach was chosen, challenges, and lessons learned. Include screenshots of the app, key features, and database tables. The ER/EER diagram is encouraged on the slides.
-- **Five-minute video** introducing the topic and purpose, walking through the main screens, demonstrating create, read, update, and delete, and explaining database interaction and key design decisions. Upload the recording and include the link in the submission textbox. Use **Unlisted** visibility if hosting on YouTube.
+- **Submission textbox** with partner name if applicable, project topic, title, brief description, programming language, DBMS, and recording link. Add the hosted app link when deployed. GitHub is optional.
+- **Slides** explaining the problem, your solution and how it helps, why you chose the approach, challenges, and lessons learned. Include screenshots of the interface, key features, and database tables. The ER/EER diagram is encouraged.
+- **Five-minute video** introducing the topic and purpose, walking through the main screens, demonstrating CRUD, and explaining the database interaction and key design decisions. Upload the video and include its link in the submission textbox. Use **Unlisted** visibility if hosting on YouTube.
