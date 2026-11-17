@@ -120,7 +120,6 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .housing-chat-form { display: flex; gap: .45rem; }
 .housing-chat-form input { min-width: 0; }
 .chat-error { color: #862d21; }
-.chat-privacy { font-size: .75rem; }
 .back-link { display: inline-block; margin-bottom: 1rem; font-size: .9rem; }
 .intake-panel { max-width: 44rem; }
 .chat-form fieldset { margin: 0; padding: .9rem; min-width: 0; border: 1px solid var(--line); border-radius: .65rem; background: #f8faf7; }

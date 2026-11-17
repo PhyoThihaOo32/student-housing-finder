@@ -90,7 +90,6 @@ export default function HousingChat() {
           <input
             ref={input}
             aria-label="Ask a housing question"
-            aria-describedby="housing-chat-privacy"
             placeholder="What rooms are available?"
             maxLength={500}
             value={draft}
@@ -98,7 +97,6 @@ export default function HousingChat() {
           />
           <button type="submit" className="primary" disabled={!draft.trim() || !!pending}>Send</button>
         </form>
-        <p id="housing-chat-privacy" className="muted chat-privacy">Leave out personal details. OpenAI may process your question when enabled.</p>
       </section>
     </div>
   )
