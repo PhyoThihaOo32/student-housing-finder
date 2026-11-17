@@ -20,7 +20,6 @@ export function BrowseHousing({ dashboard }) {
         <p className="muted">{user.student.campus.name} · Demo inventory</p>
       </div>
       {placement && <p className="notice">You have an active placement. <Link to="/requests">View your placement</Link></p>}
-      {pending && <p className="notice">You have a pending request. Choose a unit to update it or <Link to="/requests">view its status</Link>.</p>}
       {units.length === 0 ? <p className="panel muted">No demo units are currently available at your campus.</p> :
         <div className="housing-grid">
           {units.map((unit) => (
