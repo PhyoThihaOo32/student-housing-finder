@@ -1,5 +1,16 @@
+@font-face {
+  font-family: Roboto;
+  src: url('./assets/fonts/Roboto-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 75% 100%;
+  font-display: swap;
+}
+
 :root {
-  font-family: Inter, system-ui, sans-serif;
+  font-family: Roboto, system-ui, sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: 'wdth' 100;
   color: #153238;
   background: #f3f8f8;
   line-height: 1.55;
