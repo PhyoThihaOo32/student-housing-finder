@@ -72,7 +72,14 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .detail { font-size: .875rem; }
 .page-heading { margin-bottom: 1.5rem; padding-bottom: 1.15rem; border-bottom: 1px solid var(--line); }
 
-.panel, .table-wrap { border: 1px solid var(--line); border-radius: 1rem; background: var(--white); box-shadow: var(--shadow); }
+.panel, .table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: #f3fcfaf0;
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+  backdrop-filter: blur(14px) saturate(115%);
+}
 .panel { padding: 1.35rem; }
 
 .welcome-page {
@@ -153,9 +160,9 @@ h1 + p, h2 + p { margin-top: .5rem; }
 .workspace-background .back-link { color: #e8f5f4; text-underline-offset: .2em; }
 .workspace-background :is(.panel, .table-wrap) {
   --muted: #36565c;
-  background-color: #f3fcfad9;
-  border-color: #edfffbb3;
-  backdrop-filter: blur(3px);
+  background-color: #f3fcfad1;
+  border-color: #edfffba6;
+  box-shadow: 0 8px 24px #082c3514, inset 0 1px 0 #ffffff4d;
 }
 
 .housing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr)); gap: 1rem; }
@@ -182,7 +189,7 @@ h1 + p, h2 + p { margin-top: .5rem; }
   overflow: auto;
 }
 .housing-chat-panel:not([hidden]) { display: grid; gap: .65rem; box-shadow: 0 .7rem 1.65rem #15262215; }
-.workspace-background .housing-chat-panel { background-color: #effaf8eb; backdrop-filter: blur(7px); }
+.workspace-background .housing-chat-panel { background-color: #effaf8e6; }
 .housing-chat-panel .record-heading { align-items: center; }
 .chat-close { min-width: 2.5rem; padding: 0; font-size: 1.3rem; line-height: 1; }
 .housing-chat-log { display: grid; gap: .55rem; max-height: min(16rem, 32dvh); overflow: auto; padding: .15rem .2rem .2rem .1rem; }
