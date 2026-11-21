@@ -130,6 +130,11 @@ FROM (VALUES
     ('CCNY', 'Maple Hall', '302-A', 'SHARED_ROOM_BED', true),
     ('BMCC', 'Harbor Hall', '206', 'SINGLE_ROOM', true),
     ('BMCC', 'Juniper Hall', '310-A', 'SHARED_ROOM_BED', true),
+    ('BMCC', 'Cypress Hall', '207', 'SINGLE_ROOM', true),
+    ('BMCC', 'Harbor Hall', '208', 'SINGLE_ROOM', true),
+    ('BMCC', 'Juniper Hall', '310-B', 'SHARED_ROOM_BED', true),
+    ('BMCC', 'Willow Hall', '401', 'SINGLE_ROOM', true),
+    ('BMCC', 'Willow Hall', '402-A', 'SHARED_ROOM_BED', true),
     ('CCNY', 'Maple Hall', '303', 'SINGLE_ROOM', true),
     ('HUNTER', 'Parkview Hall', '412', 'SINGLE_ROOM', true)
 ) AS u(campus_code, building_name, unit_label, unit_type, is_active)
